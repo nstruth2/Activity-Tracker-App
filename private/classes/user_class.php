@@ -94,7 +94,7 @@ class User {
 
                 // Sanitize it
                 $password = $_POST['password'];
-                $password = filter_var($password, FILTER_SANITIZE_STRING);
+                $password = htmlspecialchars($password, ENT_QUOTES);
 
                 // Is the password still valid?
                 if (!$password) {
@@ -187,7 +187,7 @@ BODY;
         $username = $_GET['username'];
 
         // Sanitize them
-        $ver_code = filter_var($ver_code, FILTER_SANITIZE_STRING);
+        $ver_code = htmlspecialchars($ver_code, ENT_QUOTES);
         $username = filter_var($username, FILTER_SANITIZE_EMAIL);
 
         // Prepare the SQL SELECT statement
@@ -341,7 +341,7 @@ BODY;
 
                         // Sanitize it
                         $password = $_POST['password'];
-                        $password = filter_var($password, FILTER_SANITIZE_STRING);
+                        $password = htmlspecialchars($password, ENT_QUOTES);
 
                         // Is the password still valid?
                         if (!$password) {
@@ -375,7 +375,7 @@ BODY;
                                 $stmt->execute();
                                 $result = $stmt->get_result();
                                 $row = $result->fetch_all(MYSQLI_ASSOC);
-                                $log_id = $row[0]['log_id'];
+                                $log_id = $row[0]['log_id'] ?? null;
                                 $_SESSION['log_id'] = $log_id;
                             }
                         }
@@ -505,7 +505,7 @@ BODY;
 
         // Sanitize the username and verification code, just to be safe
         $username = filter_var($username, FILTER_SANITIZE_EMAIL);
-        $ver_code = filter_var($ver_code, FILTER_SANITIZE_STRING);
+        $ver_code = htmlspecialchars($ver_code, ENT_QUOTES); 
 
         // Verify the user:
         // First, prepare the SQL SELECT statement
@@ -538,7 +538,7 @@ BODY;
             } else {
 
                 // Sanitize it
-                $password = filter_var($password, FILTER_SANITIZE_STRING);
+                $password = htmlspecialchars($password, ENT_QUOTES);
 
                 // Is the password still valid?
                 if (!$password) {
@@ -744,7 +744,7 @@ BODY;
             } else {
 
                 // Sanitize it
-                $password = filter_var($password, FILTER_SANITIZE_STRING);
+                $password = htmlspecialchars($password, ENT_QUOTES);
 
                 // Is the password still valid?
                 if (!$password) {
@@ -787,7 +787,7 @@ BODY;
                             $stmt->execute();
                             $result = $stmt->get_result();
                             $row = $result->fetch_all(MYSQLI_ASSOC);
-                            $log_id = $row[0]['log_id'];
+                            $log_id = $row[0]['log_id'] ?? null;
 
                            // Delete the user's activities
                             $sql = "DELETE
@@ -835,4 +835,3 @@ BODY;
         return $JSON_data;
     }
 }
-?>
